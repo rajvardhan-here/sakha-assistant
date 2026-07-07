@@ -12,10 +12,9 @@ export const createChat = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 export const getAllChats = async (req, res) => {
   try {
-    const chats = await Chat.find({ userId: req.userId }).sort({ updatedAt: -1 });
+    const chats = await Chat.find({ userId: req.userId }).sort({ pinned: -1, updatedAt: -1 });
     res.json(chats);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -117,6 +116,28 @@ export const sendMessage = async (req, res) => {
     res.json({ userMessage, assistantMessage });
   } catch (error) {
     console.error("sendMessage error:", error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+export const togglePinChat = async (req, res) => {
+  try {
+    const chat = await Chat.findOne({ _id: req.params.chatId, userId: req.userId });
+    if (!chat) return res.status(404).json({ error: "Chat not found" });
+    chat.pinned = !chat.pinned;
+    await chat.save();
+    res.json(chat);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const deleteChat = async (req, res) => {
+  try {
+    const chat = await Chat.findOneAndDelete({ _id: req.params.chatId, userId: req.userId });
+    if (!chat) return res.status(404).json({ error: "Chat not found" });
+    await Message.deleteMany({ chatId: req.params.chatId });
+    res.json({ message: "Deleted" });
+  } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
