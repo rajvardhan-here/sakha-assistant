@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar.jsx";
 import ChatWindow from "../components/ChatWindow.jsx";
 import InputBar from "../components/InputBar.jsx";
+import RemindersPanel from "../components/RemindersPanel.jsx";
+import VoiceOverlay from "../components/VoiceOverlay.jsx";
 import { createChat, getAllChats, getChatMessages, sendMessage } from "../api/api.js";
 
 function ChatPage() {
@@ -9,6 +11,8 @@ function ChatPage() {
   const [activeChatId, setActiveChatId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [view, setView] = useState("chat");
+  const [voiceMode, setVoiceMode] = useState(false);
 
   useEffect(() => {
     loadChats();
@@ -33,12 +37,12 @@ function ChatPage() {
     setChats((prev) => [newChat, ...prev]);
     setActiveChatId(newChat._id);
     setMessages([]);
+    setView("chat");
   };
 
   const handleSend = async (text) => {
     let chatId = activeChatId;
 
-    // If no chat exists yet, create one first
     if (!chatId) {
       const newChat = await createChat();
       setChats((prev) => [newChat, ...prev]);
@@ -46,7 +50,6 @@ function ChatPage() {
       setActiveChatId(chatId);
     }
 
-    // Optimistically show user message
     const tempUserMsg = { role: "user", content: text, _id: Date.now() };
     setMessages((prev) => [...prev, tempUserMsg]);
     setLoading(true);
@@ -54,9 +57,11 @@ function ChatPage() {
     try {
       const { assistantMessage } = await sendMessage(chatId, text);
       setMessages((prev) => [...prev, assistantMessage]);
-      loadChats(); // refresh sidebar titles
+      loadChats();
+      return assistantMessage.content;
     } catch (err) {
       console.error(err);
+      return "Sorry, something went wrong.";
     } finally {
       setLoading(false);
     }
@@ -69,11 +74,26 @@ function ChatPage() {
         activeChatId={activeChatId}
         onSelectChat={selectChat}
         onNewChat={handleNewChat}
+        view={view}
+        onChangeView={setView}
       />
       <div className="main-panel">
-        <ChatWindow messages={messages} loading={loading} />
-        <InputBar onSend={handleSend} />
+        {view === "chat" ? (
+          <>
+            <ChatWindow messages={messages} loading={loading} />
+            <InputBar onSend={handleSend} onVoiceClick={() => setVoiceMode(true)} />
+          </>
+        ) : (
+          <RemindersPanel />
+        )}
       </div>
+
+      {voiceMode && (
+        <VoiceOverlay
+          onSendMessage={handleSend}
+          onClose={() => setVoiceMode(false)}
+        />
+      )}
     </div>
   );
 }

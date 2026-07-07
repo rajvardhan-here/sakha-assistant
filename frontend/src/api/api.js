@@ -31,3 +31,22 @@ export const sendMessage = async (chatId, content) => {
   const res = await axios.post(`${API_BASE}/message`, { chatId, content }, { headers });
   return res.data;
 };
+
+export const getAllTasks = async (type) => {
+  const headers = await getAuthHeader();
+  const url = type ? `${API_BASE}/tasks?type=${type}` : `${API_BASE}/tasks`;
+  const res = await axios.get(url, { headers });
+  return res.data;
+};
+
+export const toggleTaskComplete = async (id) => {
+  const headers = await getAuthHeader();
+  const res = await axios.patch(`${API_BASE}/tasks/${id}/complete`, {}, { headers });
+  return res.data;
+};
+
+export const deleteTask = async (id) => {
+  const headers = await getAuthHeader();
+  const res = await axios.delete(`${API_BASE}/tasks/${id}`, { headers });
+  return res.data;
+};

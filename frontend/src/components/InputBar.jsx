@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function InputBar({ onSend }) {
+function InputBar({ onSend, onVoiceClick }) {
   const [text, setText] = useState("");
 
   const handleSubmit = (e) => {
@@ -18,6 +18,17 @@ function InputBar({ onSend }) {
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
+      <button
+        type="button"
+        className="mic-btn"
+        onClick={(e) => {
+          e.preventDefault();
+          onVoiceClick();
+        }}
+        title="Voice mode"
+      >
+        🎤
+      </button>
       <button type="submit">➤</button>
     </form>
   );

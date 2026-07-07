@@ -1,6 +1,6 @@
 import { useAuth } from "../context/AuthContext.jsx";
 
-function Sidebar({ chats, activeChatId, onSelectChat, onNewChat }) {
+function Sidebar({ chats, activeChatId, onSelectChat, onNewChat, view, onChangeView }) {
   const { user, logout } = useAuth();
 
   return (
@@ -16,19 +16,37 @@ function Sidebar({ chats, activeChatId, onSelectChat, onNewChat }) {
         + New chat
       </button>
 
-      <div className="chats-label">Chats</div>
-
-      <div className="chat-list">
-        {chats.map((chat) => (
-          <div
-            key={chat._id}
-            className={`chat-item ${chat._id === activeChatId ? "active" : ""}`}
-            onClick={() => onSelectChat(chat._id)}
-          >
-            💬 {chat.title}
-          </div>
-        ))}
+      <div className="sidebar-nav">
+        <div
+          className={`nav-item ${view === "chat" ? "active" : ""}`}
+          onClick={() => onChangeView("chat")}
+        >
+          💬 Assistant
+        </div>
+        <div
+          className={`nav-item ${view === "reminders" ? "active" : ""}`}
+          onClick={() => onChangeView("reminders")}
+        >
+          ⏰ Reminders
+        </div>
       </div>
+
+      {view === "chat" && (
+        <>
+          <div className="chats-label">Chats</div>
+          <div className="chat-list">
+            {chats.map((chat) => (
+              <div
+                key={chat._id}
+                className={`chat-item ${chat._id === activeChatId ? "active" : ""}`}
+                onClick={() => onSelectChat(chat._id)}
+              >
+                💬 {chat.title}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
 
       <div className="sidebar-footer">
         {user?.photoURL ? (
