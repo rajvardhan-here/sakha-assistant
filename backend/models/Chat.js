@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const chatSchema = new mongoose.Schema(
   {
+    userId: {
+      type: String,
+      required: true,
+    },
     title: {
       type: String,
       default: "New Chat",

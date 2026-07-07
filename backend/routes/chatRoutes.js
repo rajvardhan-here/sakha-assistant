@@ -1,4 +1,5 @@
 import express from "express";
+import authMiddleware from "../middleware/authMiddleware.js";
 import {
   createChat,
   getAllChats,
@@ -7,6 +8,8 @@ import {
 } from "../controllers/chatController.js";
 
 const router = express.Router();
+
+router.use(authMiddleware); // all routes below require login
 
 router.post("/chats", createChat);
 router.get("/chats", getAllChats);
