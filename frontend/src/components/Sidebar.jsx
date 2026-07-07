@@ -1,20 +1,25 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { togglePinChat, deleteChat } from "../api/api.js";
 
-function Sidebar({ chats, activeChatId, onSelectChat, onNewChat, view, onChangeView, onChatsUpdated }) {
+function Sidebar({ chats, activeChatId, onSelectChat, onNewChat, view, onChangeView, onChatsUpdated, onOpenSettings }) {
   const { user, logout } = useAuth();
-  const [openMenuId, setOpenMenuId] = useState(null);
+  const [menuState, setMenuState] = useState(null); // { chatId, top, left }
 
   const handleMenuToggle = (e, chatId) => {
     e.stopPropagation();
-    setOpenMenuId(openMenuId === chatId ? null : chatId);
+    if (menuState?.chatId === chatId) {
+      setMenuState(null);
+      return;
+    }
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMenuState({ chatId, top: rect.bottom + 4, left: rect.left - 110 });
   };
 
   const handlePin = async (e, chatId) => {
     e.stopPropagation();
     await togglePinChat(chatId);
-    setOpenMenuId(null);
+    setMenuState(null);
     onChatsUpdated();
   };
 
@@ -22,13 +27,13 @@ function Sidebar({ chats, activeChatId, onSelectChat, onNewChat, view, onChangeV
     e.stopPropagation();
     if (confirm("Delete this chat?")) {
       await deleteChat(chatId);
-      setOpenMenuId(null);
+      setMenuState(null);
       onChatsUpdated();
     }
   };
 
   return (
-    <div className="sidebar" onClick={() => setOpenMenuId(null)}>
+    <div className="sidebar" onClick={() => setMenuState(null)}>
       <div className="sidebar-header">
         <div className="logo">
           <span className="logo-icon">✦</span>
@@ -37,7 +42,7 @@ function Sidebar({ chats, activeChatId, onSelectChat, onNewChat, view, onChangeV
       </div>
 
       <button className="new-chat-btn" onClick={onNewChat}>
-        + New chat
+        <span>+</span> New chat
       </button>
 
       <div className="sidebar-nav">
@@ -60,27 +65,31 @@ function Sidebar({ chats, activeChatId, onSelectChat, onNewChat, view, onChangeV
                 onClick={() => onSelectChat(chat._id)}
               >
                 <span className="chat-item-text">
-                  {chat.pinned ? "📌 " : "💬 "}
+                  {chat.pinned ? "📌 " : ""}
                   {chat.title}
                 </span>
                 <button className="chat-menu-btn" onClick={(e) => handleMenuToggle(e, chat._id)}>
                   ⋮
                 </button>
-
-                {openMenuId === chat._id && (
-                  <div className="chat-menu-dropdown" onClick={(e) => e.stopPropagation()}>
-                    <div className="chat-menu-item" onClick={(e) => handlePin(e, chat._id)}>
-                      {chat.pinned ? "📌 Unpin" : "📌 Pin"}
-                    </div>
-                    <div className="chat-menu-item delete" onClick={(e) => handleDelete(e, chat._id)}>
-                      🗑 Delete
-                    </div>
-                  </div>
-                )}
               </div>
             ))}
           </div>
         </>
+      )}
+
+      {menuState && (
+        <div
+          className="chat-menu-dropdown"
+          style={{ top: menuState.top, left: menuState.left }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="chat-menu-item" onClick={(e) => handlePin(e, menuState.chatId)}>
+            📌 {chats.find((c) => c._id === menuState.chatId)?.pinned ? "Unpin" : "Pin"}
+          </div>
+          <div className="chat-menu-item delete" onClick={(e) => handleDelete(e, menuState.chatId)}>
+            🗑 Delete
+          </div>
+        </div>
       )}
 
       <div className="sidebar-footer">
@@ -90,6 +99,9 @@ function Sidebar({ chats, activeChatId, onSelectChat, onNewChat, view, onChangeV
           <div className="user-avatar">{user?.displayName?.[0] || "U"}</div>
         )}
         <span className="user-name">{user?.displayName || user?.email}</span>
+        <button className="settings-btn" onClick={onOpenSettings} title="Settings">
+          ⚙
+        </button>
         <button className="logout-btn" onClick={logout} title="Logout">
           ⎋
         </button>

@@ -4,6 +4,7 @@ import ChatWindow from "../components/ChatWindow.jsx";
 import InputBar from "../components/InputBar.jsx";
 import RemindersPanel from "../components/RemindersPanel.jsx";
 import VoiceOverlay from "../components/VoiceOverlay.jsx";
+import SettingsModal from "../components/SettingsModal.jsx";
 import { createChat, getAllChats, getChatMessages, sendMessage } from "../api/api.js";
 
 function ChatPage() {
@@ -13,6 +14,7 @@ function ChatPage() {
   const [loading, setLoading] = useState(false);
   const [view, setView] = useState("chat");
   const [voiceMode, setVoiceMode] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
     loadChats();
@@ -77,6 +79,7 @@ function ChatPage() {
         view={view}
         onChangeView={setView}
         onChatsUpdated={loadChats}
+        onOpenSettings={() => setShowSettings(true)}
       />
       <div className="main-panel">
         {view === "chat" ? (
@@ -90,6 +93,7 @@ function ChatPage() {
       </div>
 
       {voiceMode && <VoiceOverlay onSendMessage={handleSend} onClose={() => setVoiceMode(false)} />}
+      {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
     </div>
   );
 }
