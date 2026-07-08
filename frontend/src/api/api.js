@@ -2,7 +2,7 @@ import axios from "axios";
 import { auth } from "../firebase.js";
 import { getGoogleToken } from "../googleToken.js";
 
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 const getAuthHeader = async () => {
   const token = await auth.currentUser?.getIdToken();
