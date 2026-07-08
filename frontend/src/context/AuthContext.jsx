@@ -19,7 +19,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const loginWithGoogle = async () => {
-    googleProvider.addScope("https://www.googleapis.com/auth/calendar.events");
+    googleProvider.addScope("https://www.googleapis.com/auth/calendar");
     googleProvider.setCustomParameters({ prompt: "consent" });
 
     const result = await signInWithPopup(auth, googleProvider);
