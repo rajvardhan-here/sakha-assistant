@@ -96,7 +96,7 @@ function ChatPage() {
       {voiceMode && <VoiceOverlay onSendMessage={handleSend} onClose={() => setVoiceMode(false)} />}
       {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
 
-      <WakeWordListener active={!voiceMode} onWake={() => setVoiceMode(true)} />
+     
     </div>
   );
 }

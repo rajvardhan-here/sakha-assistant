@@ -1,19 +1,20 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, signInWithPopup, signOut, GoogleAuthProvider } from "firebase/auth";
 import { auth, googleProvider } from "../firebase.js";
-import { setGoogleToken } from "../googleToken.js";
+import { setGoogleToken, getGoogleToken, clearGoogleToken } from "../googleToken.js";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [calendarConnected, setCalendarConnected] = useState(false);
+  const [calendarConnected, setCalendarConnected] = useState(!!getGoogleToken());
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser);
       setLoading(false);
+      setCalendarConnected(!!getGoogleToken());
     });
     return unsubscribe;
   }, []);
@@ -32,7 +33,7 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
-    setGoogleToken(null);
+    clearGoogleToken();
     setCalendarConnected(false);
     return signOut(auth);
   };

@@ -25,4 +25,4 @@ if (!getApps().length) {
 
 const adminAuth = getAuth();
 
-export default adminAuth;
+export default adminAuth; 

@@ -87,7 +87,7 @@ const formatDueDate = (dueDate) => {
 
 const answerFromSearch = async (query, searchData) => {
   const context = (searchData.results || [])
-    .map((r, i) => `[${i + 1}] ${r.title}: ${r.content}`)
+    .map((r, i) => `[${i + 1}] ${r.title}: ${r.content} (URL: ${r.url})`)
     .join("\n\n");
 
   const completion = await groq.chat.completions.create({
@@ -95,7 +95,7 @@ const answerFromSearch = async (query, searchData) => {
       {
         role: "system",
         content:
-          "You are SAKHA, a friendly AI. Use the search results below to answer the user's question naturally and conversationally, like a friend giving them a quick update. Don't mention 'search results' or sources explicitly, just answer naturally. Keep it concise. No markdown formatting.",
+          "You are SAKHA, a friendly AI. Use the search results below to answer the user's question naturally and conversationally, like a friend giving them a quick update. At the end, on a new line, include the single most relevant source URL from the results in this exact format: SOURCE: <url>. Keep the spoken answer concise. No markdown formatting in the main answer.",
       },
       {
         role: "user",
@@ -136,7 +136,11 @@ export const sendMessage = async (req, res) => {
     } else if (intent.type === "search") {
       try {
         const searchData = await webSearch(intent.content || content);
-        aiReply = await answerFromSearch(intent.content || content, searchData);
+        const rawReply = await answerFromSearch(intent.content || content, searchData);
+        // Extract SOURCE: url and format nicely
+        const sourceMatch = rawReply.match(/SOURCE:\s*(\S+)/i);
+        const cleanReply = rawReply.replace(/SOURCE:\s*\S+/i, "").trim();
+        aiReply = sourceMatch ? `${cleanReply}\n\n🔗 ${sourceMatch[1]}` : cleanReply;
       } catch (err) {
         console.error("Search error:", err.message);
         aiReply = "I couldn't fetch that information right now, sorry!";
