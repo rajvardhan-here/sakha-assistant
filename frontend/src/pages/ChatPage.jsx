@@ -5,6 +5,7 @@ import InputBar from "../components/InputBar.jsx";
 import RemindersPanel from "../components/RemindersPanel.jsx";
 import VoiceOverlay from "../components/VoiceOverlay.jsx";
 import SettingsModal from "../components/SettingsModal.jsx";
+import WakeWordListener from "../components/WakeWordListener.jsx";
 import { createChat, getAllChats, getChatMessages, sendMessage } from "../api/api.js";
 
 function ChatPage() {
@@ -94,6 +95,8 @@ function ChatPage() {
 
       {voiceMode && <VoiceOverlay onSendMessage={handleSend} onClose={() => setVoiceMode(false)} />}
       {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
+
+      <WakeWordListener active={!voiceMode} onWake={() => setVoiceMode(true)} />
     </div>
   );
 }

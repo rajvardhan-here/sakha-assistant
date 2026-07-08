@@ -15,6 +15,7 @@ function VoiceOverlay({ onSendMessage, onClose }) {
   const stoppedRef = useRef(false);
   const voicesRef = useRef([]);
   const stateRef = useRef(STATES.LISTENING);
+  const busyRef = useRef(false);
 
   useEffect(() => {
     stateRef.current = state;
@@ -22,6 +23,7 @@ function VoiceOverlay({ onSendMessage, onClose }) {
 
   useEffect(() => {
     stoppedRef.current = false;
+    busyRef.current = false;
 
     const loadVoices = () => {
       voicesRef.current = window.speechSynthesis.getVoices();
@@ -44,8 +46,16 @@ function VoiceOverlay({ onSendMessage, onClose }) {
     recognition.lang = "en-IN";
 
     recognition.onresult = async (event) => {
-      const text = event.results[0][0].transcript;
+      const text = event.results[0][0].transcript.trim();
+      if (!text || busyRef.current) return;
+
+      if (stateRef.current === STATES.SPEAKING) {
+        window.speechSynthesis.cancel();
+      }
+
+      busyRef.current = true;
       setTranscript(text);
+      setReply("");
       setState(STATES.THINKING);
 
       try {
@@ -54,7 +64,8 @@ function VoiceOverlay({ onSendMessage, onClose }) {
         speak(assistantReply);
       } catch (err) {
         console.error("Send message error:", err);
-        if (!stoppedRef.current) startListening();
+        busyRef.current = false;
+        if (!stoppedRef.current) restartRecognition();
       }
     };
 
@@ -63,21 +74,26 @@ function VoiceOverlay({ onSendMessage, onClose }) {
         setErrorMsg("Microphone access denied. Please allow mic permission and reload.");
         return;
       }
-      if (!stoppedRef.current) {
-        setTimeout(() => startListening(), 300);
-      }
+      // no-speech / aborted etc — restart handled in onend
     };
 
     recognition.onend = () => {
-      if (!stoppedRef.current && stateRef.current === STATES.LISTENING) {
-        setTimeout(() => startListening(), 200);
+      if (!stoppedRef.current) {
+        setTimeout(() => restartRecognition(), 150);
       }
     };
 
     recognitionRef.current = recognition;
 
-    // Auto-start immediately — no click needed
-    startListening();
+    const restartRecognition = () => {
+      try {
+        recognitionRef.current?.start();
+      } catch (e) {
+        // already running — ignore
+      }
+    };
+
+    restartRecognition();
 
     return () => {
       stoppedRef.current = true;
@@ -92,15 +108,13 @@ function VoiceOverlay({ onSendMessage, onClose }) {
     const voices = voicesRef.current;
     if (!voices || voices.length === 0) return null;
 
-    // Prefer known female English voices
-    const femaleNames = ["female", "zira", "samantha", "susan", "google us english", "google uk english female", "heera", "veena"];
-    const femaleMatch = voices.find(
-      (v) =>
-        v.lang?.startsWith("en") &&
-        femaleNames.some((name) => v.name.toLowerCase().includes(name))
-    );
-    if (femaleMatch) return femaleMatch;
-
+    const priorityNames = ["natural", "neural", "aria", "jenny", "zira", "samantha", "female"];
+    for (const name of priorityNames) {
+      const match = voices.find(
+        (v) => v.lang?.startsWith("en") && v.name.toLowerCase().includes(name)
+      );
+      if (match) return match;
+    }
     return (
       voices.find((v) => v.lang === "en-IN") ||
       voices.find((v) => v.lang?.startsWith("en")) ||
@@ -126,8 +140,8 @@ function VoiceOverlay({ onSendMessage, onClose }) {
 
     const cleanText = cleanTextForSpeech(text);
     const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.rate = 1.02;
-    utterance.pitch = 1.1;
+    utterance.rate = 1.03;
+    utterance.pitch = 1.05;
 
     const voice = pickVoice();
     if (voice) {
@@ -138,38 +152,32 @@ function VoiceOverlay({ onSendMessage, onClose }) {
     }
 
     utterance.onend = () => {
-      if (!stoppedRef.current) startListening();
+      busyRef.current = false;
+      if (!stoppedRef.current) {
+        setState(STATES.LISTENING);
+        setTranscript("");
+        setReply("");
+        try {
+          recognitionRef.current?.start();
+        } catch (e) {}
+      }
     };
     utterance.onerror = () => {
-      if (!stoppedRef.current) startListening();
+      busyRef.current = false;
+      if (!stoppedRef.current) {
+        setState(STATES.LISTENING);
+        try {
+          recognitionRef.current?.start();
+        } catch (e) {}
+      }
     };
 
+    // Restart recognition WHILE speaking too, so barge-in can be heard
+    try {
+      recognitionRef.current?.start();
+    } catch (e) {}
+
     window.speechSynthesis.speak(utterance);
-  };
-
-  const startListening = () => {
-    if (stoppedRef.current) return;
-    if (stateRef.current === STATES.LISTENING && recognitionRef.current) {
-      try {
-        recognitionRef.current.stop();
-      } catch (e) {}
-    }
-    setErrorMsg("");
-    setTranscript("");
-    setReply("");
-    setState(STATES.LISTENING);
-    setTimeout(() => {
-      try {
-        recognitionRef.current?.start();
-      } catch (e) {}
-    }, 100);
-  };
-
-  const handleOrbClick = () => {
-    if (state === STATES.SPEAKING) {
-      window.speechSynthesis.cancel();
-      startListening();
-    }
   };
 
   const handleClose = () => {
@@ -182,7 +190,7 @@ function VoiceOverlay({ onSendMessage, onClose }) {
   const statusText = {
     [STATES.LISTENING]: "Listening...",
     [STATES.THINKING]: "Thinking...",
-    [STATES.SPEAKING]: "Speaking... (tap to interrupt)",
+    [STATES.SPEAKING]: "Speaking... (just start talking to interrupt)",
   };
 
   return (
@@ -191,7 +199,7 @@ function VoiceOverlay({ onSendMessage, onClose }) {
         ✕
       </button>
 
-      <div className={`voice-orb ${state}`} onClick={handleOrbClick}>
+      <div className={`voice-orb ${state}`}>
         <span className="voice-orb-icon">✦</span>
       </div>
 
