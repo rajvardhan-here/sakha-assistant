@@ -399,6 +399,13 @@ body {
   font-size: 14px;
 }
 
+.login-error {
+  margin: -12px 0 18px;
+  color: #ff8a7a;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
 .google-btn {
   display: flex;
   align-items: center;

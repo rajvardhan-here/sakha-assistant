@@ -1,4 +1,4 @@
-import { useAuth } from "../context/AuthContext.jsx";
+import { useAuth } from "../context/useAuth.js";
 
 function SettingsModal({ onClose }) {
   const { user, logout, calendarConnected } = useAuth();

@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { useAuth } from "../context/AuthContext.jsx";
+import { useAuth } from "../context/useAuth.js";
 import { togglePinChat, deleteChat } from "../api/api.js";
 
 function Sidebar({ chats, activeChatId, onSelectChat, onNewChat, view, onChangeView, onChatsUpdated, onOpenSettings }) {

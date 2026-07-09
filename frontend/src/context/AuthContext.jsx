@@ -1,14 +1,14 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { onAuthStateChanged, signInWithPopup, signOut, GoogleAuthProvider } from "firebase/auth";
 import { auth, googleProvider } from "../firebase.js";
 import { setGoogleToken, getGoogleToken, clearGoogleToken } from "../googleToken.js";
-
-const AuthContext = createContext();
+import AuthContext from "./authContext.js";
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [calendarConnected, setCalendarConnected] = useState(!!getGoogleToken());
+  const [authError, setAuthError] = useState("");
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
@@ -20,15 +20,25 @@ export function AuthProvider({ children }) {
   }, []);
 
   const loginWithGoogle = async () => {
-    googleProvider.addScope("https://www.googleapis.com/auth/calendar");
-    googleProvider.setCustomParameters({ prompt: "consent" });
+    try {
+      setAuthError("");
+      googleProvider.addScope("https://www.googleapis.com/auth/calendar");
+      googleProvider.setCustomParameters({ prompt: "consent" });
 
-    const result = await signInWithPopup(auth, googleProvider);
-    const credential = GoogleAuthProvider.credentialFromResult(result);
+      const result = await signInWithPopup(auth, googleProvider);
+      const credential = GoogleAuthProvider.credentialFromResult(result);
 
-    if (credential?.accessToken) {
-      setGoogleToken(credential.accessToken);
-      setCalendarConnected(true);
+      if (credential?.accessToken) {
+        setGoogleToken(credential.accessToken);
+        setCalendarConnected(true);
+      }
+    } catch (error) {
+      const message =
+        error?.code === "auth/unauthorized-domain"
+          ? "Google Sign-In is not enabled for this domain yet. Add the current domain to Firebase Authentication > Authorized domains."
+          : "Google Sign-In could not start. Please try again.";
+      setAuthError(message);
+      throw error;
     }
   };
 
@@ -39,10 +49,8 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, loginWithGoogle, logout, calendarConnected }}>
+    <AuthContext.Provider value={{ user, loading, loginWithGoogle, logout, calendarConnected, authError, setAuthError }}>
       {children}
     </AuthContext.Provider>
   );
 }
-
-export const useAuth = () => useContext(AuthContext);
