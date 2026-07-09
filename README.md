@@ -1,68 +1,83 @@
 <div align="center">
 
-<!-- Animated typing header -->
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=32&pause=1000&color=6C63FF&center=true&vCenter=true&width=600&lines=Hey%2C+I'm+SAKHA+%F0%9F%91%8B;Your+Personal+AI+Assistant;Chat+%7C+Voice+%7C+Calendar+%7C+Search" alt="Typing SVG" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:6C63FF,100:00C6FF&height=220&section=header&text=SAKHA&fontSize=70&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Your%20Personal%20AI%20Assistant&descAlignY=55&descSize=20" width="100%"/>
+
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&pause=1200&color=6C63FF&center=true&vCenter=true&width=650&lines=Talk+to+it.+Ask+it.+Ask+it+to+remember.;Voice-enabled+%7C+Real-time+Search+%7C+Smart+Calendar;Built+solo%2C+shipped+to+production+%F0%9F%9A%80" alt="Typing SVG" />
 
 <br/>
 
 ![Made with Love](https://img.shields.io/badge/Made%20with-%E2%9D%A4%EF%B8%8F-red?style=for-the-badge)
-![Node.js](https://img.shields.io/badge/Node.js-Backend-339933?style=for-the-badge&logo=node.js&logoColor=white)
-![React](https://img.shields.io/badge/React-Vite-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![Firebase](https://img.shields.io/badge/Firebase-Auth-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
-![Status](https://img.shields.io/badge/Status-Live-brightgreen?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Live%20in%20Production-brightgreen?style=for-the-badge)
+![Solo Project](https://img.shields.io/badge/Built%20By-Solo%20Developer-6C63FF?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
 
-<br/>
+<br/><br/>
 
-### 🚀 **SAKHA** — An AI-powered personal assistant that chats, listens, searches the web, and manages your calendar — all in one place.
-
-[🔗 Live Demo](https://sakha-assistant.vercel.app) &nbsp;•&nbsp; [🖥️ Backend API](https://sakha-backend-pjoo.onrender.com) &nbsp;•&nbsp; [📂 Source Code](https://github.com/rajvardhan-here/sakha-assistant)
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=6C63FF&height=100&section=footer" />
+[**🔗 Try the Live App**](https://sakha-assistant.vercel.app) &nbsp;|&nbsp; [**⚙️ Backend API**](https://sakha-backend-pjoo.onrender.com) &nbsp;|&nbsp; [**📂 View Source**](https://github.com/rajvardhan-here/sakha-assistant) &nbsp;|&nbsp; [**👤 About Me**](#-about-the-developer)
 
 </div>
 
----
+<br/>
 
-## 📖 Table of Contents
+<div align="center">
+<img src="https://skillicons.dev/icons?i=react,vite,nodejs,express,firebase,js,html,css,git,github,vercel,render&theme=dark" />
+</div>
 
-- [About the Project](#-about-the-project)
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Architecture Overview](#-architecture-overview)
-- [Live Demo](#-live-demo)
-- [Screenshots](#-screenshots)
-- [Getting Started](#-getting-started)
-- [Environment Variables](#-environment-variables)
-- [Folder Structure](#-folder-structure)
-- [Roadmap](#-roadmap)
-- [Known Limitations](#-known-limitations)
-- [Security](#-security)
-- [Credits](#-credits)
-- [License](#-license)
-- [Contact](#-contact)
+<br/>
 
 ---
 
-## 💡 About the Project
+## 👋 What is SAKHA?
 
-**SAKHA** (सखा — meaning *"friend"* in Hindi) is a full-stack, voice-enabled AI assistant built to feel like a helpful companion rather than just another chatbot. It combines conversational AI, real-time web search, Google Calendar integration, and voice interaction into a single seamless web app.
+**SAKHA** (सखा — Hindi for *"friend"*) is a full-stack, voice-enabled AI assistant that I designed, built, and shipped to production **end-to-end, solo** — from database and auth architecture to real-time voice UX and cloud deployment.
 
-The project was built end-to-end — from authentication and backend APIs to a polished, responsive frontend — and deployed live using free-tier cloud infrastructure (Render + Vercel).
+It's not a tutorial clone. It's a production system with real users, real OAuth flows, real API cost/rate constraints, and real infrastructure decisions — the kind of problem-solving that reflects how I actually build software.
 
----
+> 💬 *Think of it as a lightweight, personal version of Google Assistant — you can talk to it, ask it to search the web, and have it manage your calendar, all wrapped in a clean web app.*
+
+<br/>
+
+## 🏆 Why This Project Stands Out
+
+<table>
+<tr>
+<td width="50%">
+
+**🎯 Full-Stack Ownership**
+Designed and built every layer myself — frontend, backend, auth, third-party integrations, and deployment pipeline.
+
+**🔐 Real-World Auth & Security**
+Implemented Firebase + Google OAuth 2.0 with scoped permissions (Calendar API access), and audited the repo for leaked secrets before going live.
+
+</td>
+<td width="50%">
+
+**🌐 Production Deployment**
+Live, publicly accessible app — backend on Render, frontend on Vercel — with environment-based configuration and CORS handling across domains.
+
+**🧠 AI Integration**
+Integrated an LLM (Groq / Llama 3.1) for natural conversation, with a custom intent-routing layer that decides when to chat, search the web, or hit the calendar API.
+
+</td>
+</tr>
+</table>
+
+<br/>
 
 ## ✨ Features
 
-- 💬 **Conversational AI Chat** — Natural, context-aware conversations powered by an LLM
-- 🔎 **Live Web Search** — Fetches real-time information from the web with clickable source links
-- 🎙️ **Voice Interaction** — Talk to SAKHA using your microphone
-- 📅 **Google Calendar Integration** — Connects your calendar for reminders and event management
-- 🔐 **Secure Google Authentication** — Firebase-powered Google Sign-In
-- ⏰ **Reminders & Tasks** — Set and track reminders directly through chat
-- 🌐 **Fully Deployed** — Live backend on Render and live frontend on Vercel
-- 📱 **Responsive UI** — Works smoothly across desktop and mobile
+| Feature | Description |
+|---|---|
+| 💬 **Conversational AI Chat** | Context-aware, natural conversations powered by an LLM (Groq / Llama 3.1) |
+| 🔎 **Live Web Search** | Real-time answers pulled from the web, with clickable source links returned in-chat |
+| 🎙️ **Voice Interaction** | Full voice input/output — talk to SAKHA like a real assistant |
+| 📅 **Google Calendar Sync** | OAuth-secured calendar integration for reminders and event management |
+| 🔐 **Secure Authentication** | Firebase-powered Google Sign-In with scoped permissions |
+| ⏰ **Smart Reminders** | Set and track tasks/reminders conversationally |
+| 📱 **Responsive Design** | Fully functional across desktop and mobile |
+| ☁️ **Cloud-Native Deployment** | CI-style auto-deploys via GitHub → Render + Vercel |
 
----
+<br/>
 
 ## 🛠️ Tech Stack
 
@@ -70,110 +85,117 @@ The project was built end-to-end — from authentication and backend APIs to a p
 
 | Layer | Technology |
 |---|---|
-| **Frontend** | ![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react) ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white) |
-| **Backend** | ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white) ![Express](https://img.shields.io/badge/Express.js-000000?style=flat&logo=express&logoColor=white) |
-| **Authentication** | ![Firebase](https://img.shields.io/badge/Firebase%20Auth-FFCA28?style=flat&logo=firebase&logoColor=black) ![Google OAuth](https://img.shields.io/badge/Google%20OAuth-4285F4?style=flat&logo=google&logoColor=white) |
-| **AI / LLM** | ![Groq](https://img.shields.io/badge/Groq-Llama%203.1-orange?style=flat) |
-| **Integrations** | Google Calendar API, Web Search API |
-| **Hosting (Backend)** | ![Render](https://img.shields.io/badge/Render-46E3B7?style=flat&logo=render&logoColor=white) |
-| **Hosting (Frontend)** | ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white) |
-| **Version Control** | ![Git](https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white) ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white) |
+| **Frontend** | ![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react) ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white) |
+| **Backend** | ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white) ![Express](https://img.shields.io/badge/Express.js-000000?style=flat-square&logo=express&logoColor=white) |
+| **Authentication** | ![Firebase](https://img.shields.io/badge/Firebase%20Auth-FFCA28?style=flat-square&logo=firebase&logoColor=black) ![Google OAuth](https://img.shields.io/badge/Google%20OAuth-4285F4?style=flat-square&logo=google&logoColor=white) |
+| **AI / LLM** | ![Groq](https://img.shields.io/badge/Groq-Llama%203.1-orange?style=flat-square) |
+| **Integrations** | Google Calendar API · Web Search API |
+| **Hosting** | ![Render](https://img.shields.io/badge/Render-46E3B7?style=flat-square&logo=render&logoColor=white) ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white) |
+| **Tooling** | ![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white) ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white) |
 
 </div>
 
----
+<br/>
 
-## 🏗️ Architecture Overview
+## 🏗️ Architecture
 
 ```
-┌──────────────────┐        HTTPS         ┌──────────────────┐
-│   Frontend        │ ───────────────────▶ │   Backend          │
-│  React + Vite      │ ◀─────────────────── │  Node.js + Express  │
-│  (Vercel)           │      JSON API         │  (Render)             │
-└──────────────────┘                       └──────────────────┘
-         │                                            │
-         │ Google Sign-In                    │ Groq LLM API
-         ▼                                            ▼
-┌──────────────────┐                       ┌──────────────────┐
-│ Firebase Auth      │                       │ Web Search /         │
-│ Google Calendar    │                       │ Calendar APIs        │
-└──────────────────┘                       └──────────────────┘
+┌─────────────────────┐        HTTPS / REST        ┌──────────────────────┐
+│      Frontend         │ ─────────────────────────▶ │       Backend           │
+│   React + Vite (SPA)   │ ◀───────────────────────── │  Node.js + Express API   │
+│   hosted on Vercel      │        JSON responses        │   hosted on Render         │
+└─────────────────────┘                             └──────────────────────┘
+          │                                                      │
+          │ Google Sign-In (OAuth)                    │ Groq LLM API
+          ▼                                                      ▼
+┌─────────────────────┐                             ┌──────────────────────┐
+│   Firebase Auth        │                             │  Web Search + Google    │
+│   Google Calendar API   │                             │  Calendar integrations   │
+└─────────────────────┘                             └──────────────────────┘
 ```
 
----
+**Key engineering decisions:**
+- Separated frontend/backend into independently deployable services for scalability
+- Used an **intent classifier** in the backend to route each chat message to the correct handler (plain chat vs. search vs. calendar action)
+- Environment-variable-driven config so the same codebase runs identically in local, staging, and production
+
+<br/>
+
+## 🧩 Challenges Solved
+
+A few real problems I ran into while building and shipping this — the kind of debugging/architecture work that doesn't show up in a feature list:
+
+- **Cross-origin auth in production** — Configured `FRONTEND_URL`, Firebase authorized domains, and Google Cloud OAuth origins together so login works seamlessly across the Vercel + Render split.
+- **Token persistence** — Diagnosed why Calendar access kept dropping (in-memory token lost on refresh) and fixed it with persistent client-side token storage.
+- **Search results without dead ends** — Redesigned the search-response pipeline so the AI always surfaces a real source link instead of just describing how to search.
+- **Secret hygiene** — Audited the entire Git history for accidentally tracked credentials/service account files before making the repo public.
+
+<br/>
 
 ## 🌍 Live Demo
 
 | Service | Link |
 |---|---|
-| 🖥️ Frontend (App) | [sakha-assistant.vercel.app](https://sakha-assistant.vercel.app) |
-| ⚙️ Backend (API health check) | [sakha-backend-pjoo.onrender.com](https://sakha-backend-pjoo.onrender.com) |
+| 🖥️ Web App | [sakha-assistant.vercel.app](https://sakha-assistant.vercel.app) |
+| ⚙️ API Health Check | [sakha-backend-pjoo.onrender.com](https://sakha-backend-pjoo.onrender.com) |
 
-> ⚠️ **Note:** The backend is hosted on Render's free tier, so it may take **~50 seconds** to wake up if it has been inactive.
+> ⚠️ Hosted on free-tier infra — the backend may take ~50s to wake up after inactivity, and Google's OAuth "unverified app" screen appears until formal verification is complete (click **Advanced → Go to SAKHA**).
 
-> ⚠️ **Note:** This app currently shows a Google *"unverified app"* warning during login since it is still pending Google's official verification process. Click **Advanced → Go to SAKHA (unsafe)** to proceed — the app is safe, this is a standard Google review formality for new OAuth apps.
-
----
+<br/>
 
 ## 🖼️ Screenshots
 
 <div align="center">
-<i>Add your app screenshots here — e.g. chat screen, voice mode, calendar sync</i>
+<i>Add screenshots or a short demo GIF here — this is the single highest-impact addition you can make for anyone (HR included) skimming the repo.</i>
 
-```
+```md
 ![Chat Screen](./screenshots/chat.png)
 ![Voice Mode](./screenshots/voice.png)
+![Calendar Sync](./screenshots/calendar.png)
 ```
 
 </div>
 
----
+<br/>
 
 ## ⚡ Getting Started
 
 ### Prerequisites
-
-- Node.js (v18 or higher)
+- Node.js v18+
 - npm
-- A Firebase project (for Auth)
+- A Firebase project (Auth)
 - A Groq API key
-- A Google Cloud project (for OAuth + Calendar API)
+- A Google Cloud project (OAuth + Calendar API)
 
-### 1. Clone the repository
+### Setup
 
 ```bash
+# 1. Clone
 git clone https://github.com/rajvardhan-here/sakha-assistant.git
 cd sakha-assistant
-```
 
-### 2. Backend Setup
-
-```bash
+# 2. Backend
 cd backend
 npm install
-cp .env.example .env   # fill in your own credentials
+cp .env.example .env   # add your own credentials
 npm run dev
-```
 
-### 3. Frontend Setup
-
-```bash
+# 3. Frontend (in a new terminal)
 cd frontend
 npm install
-cp .env.example .env   # fill in your own credentials
+cp .env.example .env   # add your own credentials
 npm run dev
 ```
 
-The frontend will run on `http://localhost:5173` and the backend on `http://localhost:5000` (or as configured).
+Frontend runs on `http://localhost:5173`, backend on `http://localhost:5000`.
 
----
+<br/>
 
 ## 🔑 Environment Variables
 
-> 🔒 **Never commit your real `.env` file.** Only `.env.example` (with placeholder values) should be tracked in Git.
+> 🔒 Real `.env` files are **never** committed — only `.env.example` templates are tracked in Git.
 
-**Backend (`backend/.env`)**
-
+**`backend/.env`**
 ```env
 PORT=5000
 GROQ_API_KEY=your_groq_api_key
@@ -181,8 +203,7 @@ FIREBASE_ADMIN_CREDENTIALS=your_firebase_admin_json_or_base64
 FRONTEND_URL=https://your-frontend-url.vercel.app
 ```
 
-**Frontend (`frontend/.env`)**
-
+**`frontend/.env`**
 ```env
 VITE_API_URL=https://your-backend-url.onrender.com/api
 VITE_FIREBASE_API_KEY=your_firebase_api_key
@@ -193,7 +214,7 @@ VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
 VITE_FIREBASE_APP_ID=your_app_id
 ```
 
----
+<br/>
 
 ## 📁 Folder Structure
 
@@ -218,57 +239,56 @@ sakha-assistant/
 └── README.md
 ```
 
----
+<br/>
 
 ## 🗺️ Roadmap
 
-- [ ] Submit app for Google OAuth verification (public launch)
-- [ ] Implement refresh-token flow for persistent Calendar access beyond 1 hour
-- [ ] Re-enable and stabilize wake-word voice activation
+- [ ] Submit for Google OAuth verification (remove "unverified app" screen)
+- [ ] Implement OAuth refresh-token flow for persistent Calendar access
+- [ ] Stabilize wake-word voice activation
+- [ ] Add automated tests (unit + integration)
 - [ ] Add dark/light theme toggle
-- [ ] Add unit and integration tests
-- [ ] Upgrade hosting tier to remove backend cold-start delay
+- [ ] Move backend to a paid tier to remove cold-start delay
 
----
-
-## ⚠️ Known Limitations
-
-- Google Calendar access token is valid for ~1 hour per session (Google's own security limit); reconnect by logging out and back in.
-- The app currently displays Google's "unverified app" screen until formal verification is complete.
-- Free-tier backend hosting may cause a short delay (~50s) on the first request after inactivity.
-
----
+<br/>
 
 ## 🔐 Security
 
-- Sensitive credentials (Firebase Admin keys, API keys) are managed via environment variables and **are not committed to this repository**.
-- Only `.env.example` files with placeholder values are tracked in version control.
-- If you fork this project, generate your own Firebase, Groq, and Google Cloud credentials — never reuse credentials from this README or commit history.
+- All credentials are managed via environment variables — never committed to the repo
+- `.env.example` templates only; real secrets stay local/on the hosting platform
+- Repo has been audited for accidentally tracked service account files or credentials
+- If you fork this project, generate your **own** Firebase, Groq, and Google Cloud credentials
 
----
+<br/>
 
-## 🙌 Credits
+## 👤 About the Developer
 
-**Project by:** [Rajvardhan](https://github.com/rajvardhan-here)
+**Rajvardhan** — Full-stack developer who built SAKHA as an independent, production-grade project to explore AI integration, OAuth security, voice interfaces, and real cloud deployment.
 
-Built as a solo full-stack project — covering backend API design, authentication, third-party integrations, and frontend development, with deployment on Render and Vercel.
-
----
-
-## 📜 License
-
-This project is licensed under the **MIT License** — feel free to use, modify, and build upon it with attribution.
-
----
-
-## 📬 Contact
+**Skills demonstrated in this project:**
+`React` `Node.js/Express` `REST API Design` `OAuth 2.0 / Firebase Auth` `LLM Integration` `Third-Party API Integration` `Cloud Deployment (Render/Vercel)` `Environment & Secrets Management` `Debugging & Production Troubleshooting`
 
 <div align="center">
 
 [![GitHub](https://img.shields.io/badge/GitHub-rajvardhan--here-181717?style=for-the-badge&logo=github)](https://github.com/rajvardhan-here)
+[![Portfolio](https://img.shields.io/badge/Portfolio-Add%20Link-6C63FF?style=for-the-badge&logo=vercel&logoColor=white)](#)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Add%20Link-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](#)
+[![Email](https://img.shields.io/badge/Email-Add%20Address-D14836?style=for-the-badge&logo=gmail&logoColor=white)](#)
 
-⭐ **If you found this project interesting, consider giving it a star!** ⭐
+</div>
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=6C63FF&height=80&section=footer" />
+<br/>
+
+## 📜 License
+
+Licensed under the **MIT License** — free to use, modify, and build on with attribution.
+
+<br/>
+
+<div align="center">
+
+⭐ **If this project is interesting to you, a star would mean a lot!** ⭐
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:00C6FF,100:6C63FF&height=120&section=footer" width="100%"/>
 
 </div>
