@@ -13,7 +13,7 @@
 
 <br/><br/>
 
-[**🔗 Try the Live App**](https://sakha-assistant.vercel.app) &nbsp;|&nbsp; [**⚙️ Backend API**](https://sakha-backend-pjoo.onrender.com) &nbsp;|&nbsp; [**📂 View Source**](https://github.com/rajvardhan-here/sakha-assistant) &nbsp;|&nbsp; [**👤 About Me**](#-about-the-developer)
+[**🔗 Try the Live App**](https://sakha-assistant.vercel.app) &nbsp;|&nbsp; [**⚙️ Backend API**](https://sakha-backend-pjoo.onrender.com) &nbsp;|&nbsp; [**📂 View Source**](https://github.com/rajvardhan-here/sakha-assistant) &nbsp;|&nbsp; [**💼 LinkedIn**](https://linkedin.com/in/rajvardhann) &nbsp;|&nbsp; [**👤 About Me**](#-about-the-developer)
 
 </div>
 
@@ -143,21 +143,6 @@ A few real problems I ran into while building and shipping this — the kind of 
 
 <br/>
 
-## 🖼️ Screenshots
-
-<div align="center">
-<i>Add screenshots or a short demo GIF here — this is the single highest-impact addition you can make for anyone (HR included) skimming the repo.</i>
-
-```md
-![Chat Screen](./screenshots/chat.png)
-![Voice Mode](./screenshots/voice.png)
-![Calendar Sync](./screenshots/calendar.png)
-```
-
-</div>
-
-<br/>
-
 ## ⚡ Getting Started
 
 ### Prerequisites
@@ -263,17 +248,17 @@ sakha-assistant/
 
 ## 👤 About the Developer
 
-**Rajvardhan** — Full-stack developer who built SAKHA as an independent, production-grade project to explore AI integration, OAuth security, voice interfaces, and real cloud deployment.
+**Rajvardhan Singh Chouhan** — Full-stack developer (React · Node.js · Express · MongoDB · Java) and B.Tech CSE student at Medi-Caps University, Indore. Built SAKHA as an independent, production-grade project to explore AI integration, OAuth security, voice interfaces, and real cloud deployment.
 
 **Skills demonstrated in this project:**
 `React` `Node.js/Express` `REST API Design` `OAuth 2.0 / Firebase Auth` `LLM Integration` `Third-Party API Integration` `Cloud Deployment (Render/Vercel)` `Environment & Secrets Management` `Debugging & Production Troubleshooting`
 
 <div align="center">
 
-[![GitHub](https://img.shields.io/badge/GitHub-rajvardhan--here-181717?style=for-the-badge&logo=github)](https://github.com/rajvardhan-here)
-[![Portfolio](https://img.shields.io/badge/Portfolio-Add%20Link-6C63FF?style=for-the-badge&logo=vercel&logoColor=white)](#)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Add%20Link-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](#)
-[![Email](https://img.shields.io/badge/Email-Add%20Address-D14836?style=for-the-badge&logo=gmail&logoColor=white)](#)
+[![GitHub](https://img.shields.io/badge/GitHub-rajvardhan--here-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/rajvardhan-here)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-rajvardhann-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/rajvardhann)
+[![Twitter](https://img.shields.io/badge/Twitter-X__rajvardhann-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/X_rajvardhann)
+[![Gmail](https://img.shields.io/badge/Gmail-Contact%20Me-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:rajvardhansinghchouhan1@gmail.com)
 
 </div>
 
