@@ -66,3 +66,14 @@ export const deleteTask = async (id) => {
   const res = await axios.delete(`${API_BASE}/tasks/${id}`, { headers });
   return res.data;
 };
+export const getAllMemories = async () => {
+  const headers = await getAuthHeader();
+  const res = await axios.get(`${API_BASE}/memories`, { headers });
+  return res.data;
+};
+
+export const deleteMemory = async (id) => {
+  const headers = await getAuthHeader();
+  const res = await axios.delete(`${API_BASE}/memories/${id}`, { headers });
+  return res.data;
+};
