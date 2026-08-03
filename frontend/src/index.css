@@ -725,3 +725,25 @@ body {
 .memory-item button:hover {
   color: #e8574a;
 }
+
+.connect-calendar-btn {
+  margin-top: 8px;
+  padding: 8px 14px;
+  background: #e8734a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.connect-calendar-btn:hover {
+  background: #d4633c;
+}
+
+.settings-error {
+  margin-top: 8px;
+  color: #ff6b6b;
+  font-size: 12px;
+}

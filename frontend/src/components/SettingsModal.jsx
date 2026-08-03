@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext.jsx";
+import { useAuth } from "../context/authContext.js";
 import { getAllMemories, deleteMemory } from "../api/api.js";
 
 function SettingsModal({ onClose }) {
-  const { user, logout, calendarConnected } = useAuth();
+  const { user, logout, calendarConnected, connectCalendar, authError } = useAuth();
   const [memories, setMemories] = useState([]);
   const [showMemories, setShowMemories] = useState(false);
 
@@ -34,8 +34,14 @@ function SettingsModal({ onClose }) {
         <div className="settings-section">
           <div className="settings-label">Google Calendar</div>
           <div className="settings-sub">
-            {calendarConnected ? "🟢 Connected" : "🔴 Not connected — log out and log in again"}
+            {calendarConnected ? "🟢 Connected" : "🔴 Not connected"}
           </div>
+          {!calendarConnected && (
+            <button className="connect-calendar-btn" onClick={connectCalendar}>
+              Connect Google Calendar
+            </button>
+          )}
+          {authError && <div className="settings-error">{authError}</div>}
         </div>
 
         <div className="settings-section">

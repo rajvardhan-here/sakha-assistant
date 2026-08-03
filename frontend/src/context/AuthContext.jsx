@@ -19,7 +19,21 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
+  // Basic login — NO sensitive scopes. Works for everyone, no verification warning.
   const loginWithGoogle = async () => {
+    try {
+      setAuthError("");
+      const result = await signInWithPopup(auth, googleProvider);
+      // no calendar scope requested here at all
+      return result;
+    } catch (error) {
+      setAuthError("Google Sign-In could not start. Please try again.");
+      throw error;
+    }
+  };
+
+  // Separate, optional step — only called when user clicks "Connect Calendar" in Settings.
+  const connectCalendar = async () => {
     try {
       setAuthError("");
       googleProvider.addScope("https://www.googleapis.com/auth/calendar");
@@ -35,8 +49,8 @@ export function AuthProvider({ children }) {
     } catch (error) {
       const message =
         error?.code === "auth/unauthorized-domain"
-          ? "Google Sign-In is not enabled for this domain yet. Add the current domain to Firebase Authentication > Authorized domains."
-          : "Google Sign-In could not start. Please try again.";
+          ? "This domain isn't authorized yet. Contact the developer."
+          : "Couldn't connect Google Calendar. Please try again.";
       setAuthError(message);
       throw error;
     }
@@ -49,10 +63,10 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, loginWithGoogle, logout, calendarConnected, authError, setAuthError }}>
+    <AuthContext.Provider
+      value={{ user, loading, loginWithGoogle, connectCalendar, logout, calendarConnected, authError, setAuthError }}
+    >
       {children}
     </AuthContext.Provider>
   );
 }
-
-export { useAuth } from "./authContext.js";
