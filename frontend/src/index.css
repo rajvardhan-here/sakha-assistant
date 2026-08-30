@@ -74,7 +74,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 501;
   color: #b0aeab;
 }
 
@@ -90,7 +90,7 @@ body {
 .chats-label {
   color: #7a7a7a;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 601;
   margin-bottom: 8px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
