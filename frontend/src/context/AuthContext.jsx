@@ -4,6 +4,26 @@ import { auth, googleProvider } from "../firebase.js";
 import { setGoogleToken, getGoogleToken, clearGoogleToken } from "../googleToken.js";
 import AuthContext from "./authContext.js";
 
+const describeAuthError = (error) => {
+  const code = error?.code || "unknown";
+  const messages = {
+    "auth/unauthorized-domain":
+      "This website's domain isn't authorized in Firebase yet. (Firebase → Authentication → Settings → Authorized domains)",
+    "auth/popup-blocked":
+      "Your browser blocked the login popup. Please allow popups for this site and try again.",
+    "auth/popup-closed-by-user": "Login popup was closed before finishing. Please try again.",
+    "auth/cancelled-popup-request": "Another login popup was already open. Please try again.",
+    "auth/operation-not-allowed":
+      "Google Sign-In is not enabled in Firebase. (Firebase → Authentication → Sign-in method → Google)",
+    "auth/invalid-api-key": "Firebase API key is missing or invalid in this deployment.",
+    "auth/api-key-not-valid.-please-pass-a-valid-api-key.":
+      "Firebase API key is missing or invalid in this deployment.",
+    "auth/network-request-failed": "Network error. Please check your internet and try again.",
+    "auth/internal-error": "Internal Firebase error. Please try again in a moment.",
+  };
+  return `${messages[code] || "Google Sign-In failed."} (${code})`;
+};
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -19,20 +39,19 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-  // Basic login — NO sensitive scopes. Works for everyone, no verification warning.
+  // Basic login — no sensitive scopes, works for everyone.
   const loginWithGoogle = async () => {
     try {
       setAuthError("");
-      const result = await signInWithPopup(auth, googleProvider);
-      // no calendar scope requested here at all
-      return result;
+      return await signInWithPopup(auth, googleProvider);
     } catch (error) {
-      setAuthError("Google Sign-In could not start. Please try again.");
+      console.error("Login error:", error.code, error.message);
+      setAuthError(describeAuthError(error));
       throw error;
     }
   };
 
-  // Separate, optional step — only called when user clicks "Connect Calendar" in Settings.
+  // Optional step from Settings — requests Calendar permission.
   const connectCalendar = async () => {
     try {
       setAuthError("");
@@ -47,11 +66,8 @@ export function AuthProvider({ children }) {
         setCalendarConnected(true);
       }
     } catch (error) {
-      const message =
-        error?.code === "auth/unauthorized-domain"
-          ? "This domain isn't authorized yet. Contact the developer."
-          : "Couldn't connect Google Calendar. Please try again.";
-      setAuthError(message);
+      console.error("Calendar connect error:", error.code, error.message);
+      setAuthError(describeAuthError(error));
       throw error;
     }
   };
@@ -70,3 +86,5 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
+
+export { useAuth } from "./authContext.js";

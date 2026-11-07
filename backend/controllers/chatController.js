@@ -11,6 +11,7 @@ import { createCalendarEvent } from "../services/calendarService.js";
 
 dotenv.config();
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-20b";
 
 export const createChat = async (req, res) => {
   try {
@@ -100,9 +101,10 @@ const answerFromSearch = async (query, searchData) => {
       },
       { role: "user", content: `Question: ${query}\n\nInformation found:\n${context}` },
     ],
-    model: "llama-3.1-8b-instant",
+    model: MODEL,
     temperature: 0.5,
-    max_tokens: 500,
+    max_tokens: 1500,
+    reasoning_effort: "low",
   });
 
   return completion.choices[0]?.message?.content || "I couldn't find current information on that.";

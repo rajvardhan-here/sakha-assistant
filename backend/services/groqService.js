@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-20b";
 
 export const getGroqResponse = async (history, memories = []) => {
   try {
@@ -22,9 +23,10 @@ export const getGroqResponse = async (history, memories = []) => {
         },
         ...history,
       ],
-      model: "llama-3.1-8b-instant",
+      model: MODEL,
       temperature: 0.8,
-      max_tokens: 1024,
+      max_tokens: 2048,
+      reasoning_effort: "low",
     });
 
     return completion.choices[0]?.message?.content || "Sorry, no response generated.";
